@@ -1,18 +1,22 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import * as authService from '../services/authService';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [pwd, setPwd] = useState('');
     const [confirmPwd, setConfirmPwd] = useState('');
-    // const navigate = useNavigate(); // will activate after routes added in app.jsx
+    const navigate = useNavigate(); 
     const [e, setE] = useState(null);
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (pwd !== confirmPwd) {
             setE("The passwords you provided do not match, please try again.");
             return;
-        }
+        } 
+        await authService.signup({username, password: pwd });
+        navigate('/sign-in');
+        
     }
 
     const isFormInvalid = () => {
@@ -25,15 +29,15 @@ const Register = () => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username </label>
-                        <input type='string' value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input id='username' type='string' name='username' value={username} onChange={(e) => setUsername(e.target.value)} />
                    </div>
                    <div>
-                    <label htmlFor="pwd">Password</label>
-                    <input type='password' value={pwd} onChange={(e) => setPwd(e.target.value)} />
+                        <label htmlFor="pwd">Password</label>
+                        <input id='pwd' type='password' name='password' value={pwd} onChange={(e) => setPwd(e.target.value)} />
                    </div>
                    <div>
-                    <label htmlFor="confirm-pwd">Confirm Password</label>
-                    <input type='password' placeholder='must match password' value={confirmPwd} onChange={(e) => setConfirmPwd(e.target.value)} />
+                        <label htmlFor="confirm-pwd">Confirm Password</label>
+                        <input id='confirmPwd' type='password' name='confirmPassword' placeholder='must match password' value={confirmPwd} onChange={(e) => setConfirmPwd(e.target.value)} />
                    </div>
                    
                    <button disabled={isFormInvalid()}>Register</button>
