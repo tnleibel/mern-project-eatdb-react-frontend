@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+// importing star from react
+import { IoIosStar } from "react-icons/io"; 
+
 //mocking a restaurant until the backend is done
 const mockRestaurant = [
     {id: 1, name: 'pink onion', category: 'Italian', rating: 5, review: 'best pizza spot in SF'},
@@ -20,19 +24,27 @@ const Restaurant = () => {
         <>
             <div>
                 <h1>All Restaurants</h1>
-                {restaurants.length === 0 ? (
-                    <div><p>you have not added any restaurants</p></div>
-                ) : (
-                    <ul>{restaurants.map(r => (
+                <Link to="/restaurants/new">Add Restaurant</Link>
+                {/* <ul>
+                    {restaurants.map((restaurant) => (
+                        <li key={restaurant._id}>
+                            <Link to={`/restaurants/${restaurant._id}`}>{restaurant.name}</Link>
+                        </li>
+                    ))} 
+                </ul> */} 
+                {/* need backend for this to work */}
+
+                {/* testing using mockres */}
+                <ul>
+                    {restaurants.map((restaurant) => (
                         <li>
-                            <h1>{r.name}</h1>
-                            <p>category: {r.category}</p>
-                            <p>Rating: {r.rating}</p>
-                            <p>Review: {r.review}</p>
-                        </li>    
-                    ))}    
-                    </ul>
-                )}
+                            <Link to={`/restaurants/${restaurant.id}`}>{restaurant.name}</Link>
+                            <p>Ctg: {restaurant.category}</p>
+                            <p><IoIosStar />: {restaurant.rating}</p>
+                            <p>Reviews: {restaurant.review}</p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     )
