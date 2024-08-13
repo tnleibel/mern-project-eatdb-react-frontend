@@ -11,7 +11,7 @@ const mockRestaurant = [
     {id: 4, name: 'sfasfa', category: 'American', rating: 0, review: 'terrible food and service'},
 ]
 const fetchUserRestaurants = (userId) => {
-    return mockRestaurant.filter(restaurant => restaurant.userId === userId);
+    return mockRestaurant;
 }
 const Restaurant = () => {
     const [restaurants, setRestaurants] = useState([]);
@@ -34,10 +34,10 @@ const Restaurant = () => {
                 </ul> */} 
                 {/* need backend for this to work */}
 
-                {/* testing using mockres */}
+                {/* testing using mock data*/}
                 <ul>
                     {restaurants.map((restaurant) => (
-                        <li>
+                        <li key={restaurant.id}>
                             <Link to={`/restaurants/${restaurant.id}`}>{restaurant.name}</Link>
                             <p>Ctg: {restaurant.category}</p>
                             <p><IoIosStar />: {restaurant.rating}</p>

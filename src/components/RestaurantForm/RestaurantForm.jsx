@@ -25,7 +25,7 @@ const RestaurantForm = (props) => {
     useEffect(() => {
 
     });
-    // need to write the handle submit and also setting each input onchange to events value
+    
     return (
         <form onSubmit={handleSubmit}>
 

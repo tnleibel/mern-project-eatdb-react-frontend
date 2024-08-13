@@ -1,5 +1,3 @@
-// currently being worked on, dont render in app.jsx
-
 import { Link } from 'react-router-dom';
 
 const NavBar = ({ user, setUser }) => {
