@@ -8,7 +8,7 @@ const signup = async (formData) => {
             body: JSON.stringify(formData),
         })
         const json = await res.json()
-
+        
         if(json.token) {
             localStorage.setItem('token', json.token)
         }
