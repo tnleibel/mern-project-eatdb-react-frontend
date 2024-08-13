@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import * as authService from '../src/services/authService'
 import * as restaurantService from '../src/services/restaurantService'
 import Register from "./components/Register/Register";
@@ -12,6 +12,7 @@ import SingleRestaurant from './components/SingleRestaurant/SingleRestaurant';
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
   const [restaurants, setRestaurants] = useState([])
+  const navigate = useNavigate()
 
   const handleSignout = () => {
     authService.signout()
@@ -22,6 +23,26 @@ const App = () => {
     const newRestaurant = await restaurantService.create(restaurantData)
     setRestaurants([newRestaurant, ...restaurants])
   }
+
+  const handleDeleteRestaurant = async (restaurantId) => {
+    const toDelete = await restaurantService.deleteRestaurant(restaurantId)
+    setRestaurants(restaurants.filter((restaurant) => restaurant._id !== restaurantId))
+    navigate(`/restaurants/${restaurantId}`)
+  }
+
+  const handleUpdateRestaurant = async (restaurantId, restaurantData) => {
+    const toUpdate = await restaurantService.update(restaurantId, restaurantData)
+    setRestaurants(restaurants.map((restaurant) => (restaurantId === restaurant._id ? toUpdate : restaurant)))
+    navigate(`/restaurants/${restaurantId}`)
+  }
+
+  useEffect (() => {
+    const fetchRestaurants = async () => {
+      const restaurantsData = await restaurantService.index()
+      console.log(('restaurantsData', restaurantsData))
+    }
+    if (user) fetchRestaurants()
+  }, [user])
   
   return (
     <>
@@ -32,7 +53,8 @@ const App = () => {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
-        <Route path='/restaurants/:id' element={<SingleRestaurant />} />
+        {/* <Route path='/restaurants/:restaurantId' element={<RestaurantDetails handleDeleteRestaurant={handleDeleteRestaurant} />} /> */}
+        <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
       </Routes>
     </> 
   );
