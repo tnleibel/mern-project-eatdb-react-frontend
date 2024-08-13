@@ -5,8 +5,9 @@ import * as restaurantService from '../src/services/restaurantService'
 import Register from "./components/Register/Register";
 import SignIn from "./components/SignIn/SignIn";
 import NavBar from './components/NavBar/NavBar';
-import Restaurant from './components/Restaurant';
+import Restaurant from './components/Restaurant.jsx/Restaurant';
 import RestaurantForm from './components/RestaurantForm/RestaurantForm';
+import SingleRestaurant from './components/SingleRestaurant/SingleRestaurant';
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
+        <Route path='/restaurants/:id' element={<SingleRestaurant />} />
       </Routes>
     </> 
   );
