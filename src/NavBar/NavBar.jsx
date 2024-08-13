@@ -2,7 +2,7 @@
 
 import { Link } from 'react-router-dom';
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user, setUser }) => {
 
 
   return (
@@ -17,8 +17,8 @@ const NavBar = ({ user }) => {
       ) : (
         <nav>
           <ul>
-            <li><Link to="/signin">Sign In</Link></li>
-            <li><Link to="/signup">Sign Up</Link></li>
+            <li><Link to="/sign-in">Sign In</Link></li>
+            <li><Link to="/sign-up">Register</Link></li>
           </ul>
         </nav>
       )}
