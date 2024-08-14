@@ -53,7 +53,7 @@ const App = () => {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
-        {/* <Route path='/restaurants/:restaurantId' element={<RestaurantDetails handleDeleteRestaurant={handleDeleteRestaurant} />} /> */}
+        <Route path='/restaurants/:restaurantId' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
         <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
       </Routes>
     </> 
