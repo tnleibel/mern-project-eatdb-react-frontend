@@ -34,14 +34,14 @@ const SingleRestaurant = () => {
                 <ul>
                     {restaurant.foodList.length > 0 ? (
                         restaurant.foodList.map((food, index) => (
-                            <div key={index}>
+                            <li key={index}>
                                 <p>{food.name}</p>
                                 <p>{food.ingredients}</p>
                                 <p>{food.isVegan ? "Vegan" : "Not Vegan"}</p>
                                 <p>Food Rating: {food.rating}</p>
                                 <p>Price: {food.price}</p>
                                 <Link to={`/restaurants/${id}/food/edit/${food._id}`}>Edit Food</Link>
-                            </div>
+                            </li>
                         ))
                     ) : (
                         <p>Nothing is in foodList</p>
