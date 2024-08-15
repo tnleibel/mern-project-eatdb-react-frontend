@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as authService from "../../services/authService"; 
-const SignIn = ({ setUser }) => {
-    const [username, setUsername] = useState('');
-    const [err, setErr] = useState();
-    const [pwd, setPwd] = useState();
+
+const SignIn = (props) => {
+    const [message, setMessage] = useState([''])
+    const [signinForm, setSigninForm] = useState({
+        username: '',
+        password: ''
+    })
+
     const navigate = useNavigate();
 
-    const handleSubmit = async(e) => {
+    const updateMessage = (msg) => {
+        setMessage(msg)
+    }
+
+    const handleChange = (e) => {
+        updateMessage('')
+        setSigninForm({ ...signinForm, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const { token, user } = await authService.signin({ username, password: pwd})
@@ -17,7 +30,6 @@ const SignIn = ({ setUser }) => {
         } catch (e) {
             setErr('Invalid credentials')
         }
-        
     }
 
     return (
@@ -28,11 +40,11 @@ const SignIn = ({ setUser }) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username</label>
-                        <input type='string' name='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type='text' name='username' value={signinForm.username} onChange={handleChange} />
                     </div>
                     <div>
                         <label htmlFor="pwd">Password</label>
-                        <input type='password' name='password' value={pwd} onChange={(e) => setPwd(e.target.value)} />
+                        <input type='password' name='password' value={signinForm.password} onChange={handleChange} />
                     </div>
                     <button type='submit'>Sign-In</button>
                     {err && <p> {err}</p>}

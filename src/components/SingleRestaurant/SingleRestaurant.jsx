@@ -43,7 +43,7 @@ const SingleRestaurant = () => {
                                 <p>{food.isVegan ? "Vegan" : "Not Vegan"}</p>
                                 <p>Food Rating: {food.rating}</p>
                                 <p>Price: {food.price}</p>
-                                <Link to={`/restaurants/${id}/food/edit/${food.id}`}>Edit Food</Link>
+                                <Link to={`/restaurants/${id}/food/edit/${food._id}`}>Edit Food</Link>
                             </li>
                         ))
                     ) : (
