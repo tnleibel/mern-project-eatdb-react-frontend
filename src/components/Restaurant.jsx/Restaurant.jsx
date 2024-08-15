@@ -29,12 +29,9 @@ const Restaurant = () => {
     const getUserRestaurants = async (userId) => {
         try {
             const allRestaurantsOnDB = await restaurantService.index();
-            // so in the backend, the author is an object id
-            // which i think is the same as the user id (or atleast needs to be the same as the user id)
-            // so when creating a restaurants and putting it into the db
-            // I need assign the author value to be the users object id ( which are objects ) so I need to compare objects???
-            // can use mongoose.types.objectId to convert ids to object ids
-            // const newUserId = mongoose.Types.ObjectId(userId);
+            // comparing the authors _id with our userId
+            // in our backend, we are populating author with user information 
+            // since we only need the _id, we can access it using dot notation
             const userFilteredRestaurants = allRestaurantsOnDB.filter(restaurant => restaurant.author._id === userId);
             setUserRestaurants(userFilteredRestaurants);
         } catch (e) {

@@ -38,6 +38,8 @@ const App = () => {
     navigate(`/restaurants/${restaurantId}`)
   }
 
+
+
   useEffect (() => {
     const fetchRestaurants = async () => {
       if (user) {
@@ -54,8 +56,8 @@ const App = () => {
       <NavBar user={user} setUser={setUser} handleSignout={handleSignout} />
       <Routes>
         {/* <Route path='/' element={<Landing />} /> */}
-        <Route path='/sign-up' element={<Register />} />
-        <Route path='/sign-in' element={<SignIn setUser={setUser}/>} />
+        <Route path='/sign-up' element={<Register setUser={setUser} />} />
+        <Route path='/sign-in' element={<SignIn  setUser={setUser} />} />
 
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/:id' element={<SingleRestaurant />} />

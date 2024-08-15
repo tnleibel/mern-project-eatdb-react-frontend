@@ -36,6 +36,7 @@ const SignIn = ({ setUser }) => {
             <div>
                 <h1>Welcome, Sign In</h1>
                 {message && <p style={{ color: 'red'}}>{message}</p>}
+                {message && <p style={{ color: 'red'}}>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username</label>
@@ -46,6 +47,7 @@ const SignIn = ({ setUser }) => {
                         <input type='password' name='password' value={signinForm.password} onChange={handleChange} />
                     </div>
                     <button type='submit'>Sign-In</button>
+                    {message && <p> {message}</p>}
                     {message && <p> {message}</p>}
                 </form>
             </div>

@@ -15,6 +15,11 @@ const SingleRestaurant = () => {
     const [restaurant, setRestaurant] = useState(null);
     const { id } = useParams();
 
+    const handleAddFood = async (foodFormData) => {
+        const newFood = await restaurantService.createFood(restaurantId, foodFormData)
+        setRestaurant({ ...restaurant, foodList: [...restaurant.foodList, newFood] })
+      }
+
     useEffect(() => {
         const getSingleRestaurant = async () => {
             const returnedData = await restaurantService.show(id);
