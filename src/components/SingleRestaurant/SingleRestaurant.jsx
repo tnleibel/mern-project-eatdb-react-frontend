@@ -1,28 +1,30 @@
 import { useState, useEffect } from "react";
 // import { IoIosStar } from "react-icons/io"; 
 import { Link, useParams } from "react-router-dom";
+import * as restaurantService from '../../services/restaurantService';
 
 //mocking a restaurant until the backend is done
-const mockRestaurant = [
-    {id: 1, name: 'pink onion', category: 'Italian', rating: 5, review: 'best pizza spot in SF', foodList: []},
-    {id: 2, name: 'shi shi', category: 'Japanese', rating: 3, review: 'good vibes', foodList: []},
-    {id: 3, name: 'linlin', category: 'Indian', rating: 3.5, review: 'had a great time with my wife, great service', foodList: []},
-    {id: 4, name: 'sfasfa', category: 'American', rating: 0, review: 'terrible food and service', foodList: []},
-]
+// const mockRestaurant = [
+//     {id: 1, name: 'pink onion', category: 'Italian', rating: 5, review: 'best pizza spot in SF', foodList: []},
+//     {id: 2, name: 'shi shi', category: 'Japanese', rating: 3, review: 'good vibes', foodList: []},
+//     {id: 3, name: 'linlin', category: 'Indian', rating: 3.5, review: 'had a great time with my wife, great service', foodList: []},
+//     {id: 4, name: 'sfasfa', category: 'American', rating: 0, review: 'terrible food and service', foodList: []},
+// ]
 
 const SingleRestaurant = () => {
     const [restaurant, setRestaurant] = useState(null);
     const { id } = useParams();
 
     useEffect(() => {
-        // will need to fetch the details of restaurants by id after backend is done
-        //testing using mock restaurant data
-        console.log(id);
-        const fetchedMockRestaurantById = mockRestaurant.find((x) => x.id === parseInt(id));
-        setRestaurant(fetchedMockRestaurantById)
+        const getSingleRestaurant = async () => {
+            const returnedData = await restaurantService.show(id);
+            setRestaurant(returnedData);
+        } 
+        getSingleRestaurant();
+        
     }, [id]);
     if (!restaurant) {
-        return <div>Loading the details of the clicked restaurant.....</div>
+        return <div>No restaurant found in the database</div>
     }
     return (
         <>
