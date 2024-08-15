@@ -47,18 +47,19 @@ const Register = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username </label>
-                        <input id='username' type='text' name='username' value={signupFormData.username} onChange={handleChange} />
+                        <input id='username' type='text' name='username' value={username} onChange={handleChange} />
                    </div>
                    <div>
                         <label htmlFor="pwd">Password</label>
-                        <input id='pwd' type='password' name='password' value={signupFormData.password} onChange={handleChange} />
+                        <input id='pwd' type='password' name='password' value={password} onChange={handleChange} />
                    </div>
                    <div>
                         <label htmlFor="confirm-pwd">Confirm Password</label>
-                        <input id='confirmPwd' type='password' name='confirmPassword' value={signupFormData.confirmPassword} placeholder='must match password' onChange={handleChange} />
+                        <input id='confirm-pwd' type='password' name='confirmPassword' value={confirmPassword} placeholder='must match password' onChange={handleChange} />
                    </div>
                    {message && <p className="error-message">{message}</p>}
                    <button type="submit" disabled={isFormInvalid()}>Register</button>
+
                 </form>
             </div>
         </>

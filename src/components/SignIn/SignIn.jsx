@@ -27,7 +27,7 @@ const SignIn = ({ setUser }) => {
             setUser(user);
             navigate('/restaurants');                                                          
         } catch (e) {
-            setMessage('Invalid credentials')
+            updateMessage(e)
         }
     }
 

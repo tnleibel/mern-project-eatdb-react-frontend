@@ -38,6 +38,8 @@ const App = () => {
     navigate(`/restaurants/${restaurantId}`)
   }
 
+
+
   useEffect (() => {
     const fetchRestaurants = async () => {
       if (user) {
@@ -56,13 +58,11 @@ const App = () => {
         {/* <Route path='/' element={<Landing />} /> */}
         <Route path='/sign-up' element={<Register />} />
         <Route path='/sign-in' element={<SignIn setUser={setUser}/>} />
-
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/:id' element={<SingleRestaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
         <Route path='/restaurants/:restaurantId' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
         <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
-        
       </Routes>
     </> 
   );

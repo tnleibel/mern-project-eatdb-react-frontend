@@ -16,6 +16,7 @@ const signup = async (formData) => {
         if(json.error) {
             throw new Error(json.error)
         }
+        return json
     } catch (error) {
         console.log(error)
         throw error
