@@ -64,7 +64,6 @@ const App = () => {
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
         <Route path='/restaurants/:restaurantId' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
         <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
-        
       </Routes>
     </> 
   );
