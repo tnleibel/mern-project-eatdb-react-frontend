@@ -1,8 +1,9 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
+import { jwtDecode } from "jwt-decode"
 
 const signup = async (formData) => {
     try {
-        const res = await fetch(`${BACKEND_URL}/users/sign-up`, {
+        const res = await fetch(`${BACKEND_URL}/users/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
@@ -23,7 +24,7 @@ const signup = async (formData) => {
 
 const signin = async (formData) => {
     try {
-        const res = await fetch(`${BACKEND_URL}/users/sign-in`, {
+        const res = await fetch(`${BACKEND_URL}/users/signin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
@@ -34,7 +35,8 @@ const signin = async (formData) => {
         }
         if(json.token) {
             localStorage.setItem('token', json.token)
-            const user = JSON.parse(atob(json.token.split('.')[1]))
+            const user = jwtDecode(json.token);
+            // const user = JSON.parse(atob(json.token.split('.')[1]))
             return user
         }
     } catch (error) {
@@ -46,8 +48,15 @@ const signin = async (formData) => {
 const getUser = () => {
     const token = localStorage.getItem('token')
     if(!token) return null
-    const user = JSON.parse(atob(token.split('.')[1]))
-    return user
+    try {
+        const user = jwtDecode(token);
+        return user;
+    } catch (e) {
+        console.log('decoding error', e);
+        return null;
+    }
+//     const user = JSON.parse(atob(token.split('.')[1]))
+//     return user
 }
 
 const signout = () => {

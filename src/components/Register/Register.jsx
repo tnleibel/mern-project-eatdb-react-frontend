@@ -2,25 +2,43 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import * as authService from '../../services/authService'
 
-const Register = () => {
-    const [username, setUsername] = useState('');
-    const [pwd, setPwd] = useState('');
-    const [confirmPwd, setConfirmPwd] = useState('');
+const Register = (props) => {
+    const [message, setMessage] = useState([''])
+    const [signupFormData, setSignupFormData] = useState({
+        username: '',
+        password: '',
+        confirmPassword: ''
+    })
     const navigate = useNavigate(); 
-    const [e, setE] = useState(null);
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (pwd !== confirmPwd) {
-            setE("The passwords you provided do not match, please try again.");
-            return;
-        } 
-        await authService.signup({username, password: pwd });
-        navigate('/sign-in');
-        
+
+
+    const updateMessage = (msg) => {
+        setMessage(msg)
     }
 
+    const handleChange = async (e) => {
+        setSignupFormData({ ...signupFormData, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (password !== confirmPassword) {
+            updateMessage("The passwords you provided do not match, please try again.");
+        return;
+        } 
+        try {
+            const response = await authService.signup(signupFormData)
+            navigate('/sign-in')
+        } catch (error) {
+            updateMessage(error.message)
+
+        }
+    }
+
+    const { username, password, confirmPassword } = signupFormData
+
     const isFormInvalid = () => {
-        return !(username && pwd && pwd === confirmPwd);
+        return !(username && password && password === confirmPassword);
     };
     return (
         <>
@@ -29,18 +47,18 @@ const Register = () => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username </label>
-                        <input id='username' type='string' name='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input id='username' type='text' name='username' value={signupFormData.username} onChange={handleChange} />
                    </div>
                    <div>
                         <label htmlFor="pwd">Password</label>
-                        <input id='pwd' type='password' name='password' value={pwd} onChange={(e) => setPwd(e.target.value)} />
+                        <input id='pwd' type='password' name='password' value={signupFormData.password} onChange={handleChange} />
                    </div>
                    <div>
                         <label htmlFor="confirm-pwd">Confirm Password</label>
-                        <input id='confirmPwd' type='password' name='confirmPassword' placeholder='must match password' value={confirmPwd} onChange={(e) => setConfirmPwd(e.target.value)} />
+                        <input id='confirmPwd' type='password' name='confirmPassword' value={signupFormData.confirmPassword} placeholder='must match password' onChange={handleChange} />
                    </div>
-                   
-                   <button disabled={isFormInvalid()}>Register</button>
+                   {err && <p className="error-message">{err}</p>}
+                   <button type="submit" disabled={isFormInvalid()}>Register</button>
                 </form>
             </div>
         </>
