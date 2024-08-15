@@ -49,7 +49,7 @@ const App = () => {
       <NavBar user={user} setUser={setUser} handleSignout={handleSignout} />
       <Routes>
         {/* <Route path='/' element={<Landing />} /> */}
-        <Route path='/sign-up' element={<Register />} />
+        <Route path='/sign-up' element={<Register setUser={setUser} />} />
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />

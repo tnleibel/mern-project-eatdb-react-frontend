@@ -1,15 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signin } from "../../services/authService"; 
-const SignIn = () => {
-    const [username, setUsername] = useState('');
-    const [pwd, setPwd] = useState();
+import * as authService from "../../services/authService"; 
+
+
+const SignIn = (props) => {
+    const [message, setMessage] = useState([''])
+    const [signinForm, setSigninForm] = useState({
+        username: '',
+        password: ''
+    })
     const navigate = useNavigate();
 
-    const handleSubmit = async(e) => {
+    const updateMessage = (msg) => {
+        setMessage(msg)
+    }
+
+    const handleChange = (e) => {
+        updateMessage('')
+        setSigninForm({ ...signinForm, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const user = await signin({ username, password: pwd });
-        navigate('/')
+        try {
+            const user = await authService.signin(signinForm)
+            props.setUser(user)
+            navigate('/')
+        } catch (error) {
+            updateMessage(error.message)
+        }
     }
 
     return (
@@ -19,11 +38,11 @@ const SignIn = () => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username</label>
-                        <input type='string' name='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type='text' name='username' value={signinForm.username} onChange={handleChange} />
                     </div>
                     <div>
                         <label htmlFor="pwd">Password</label>
-                        <input type='password' name='password' value={pwd} onChange={(e) => setPwd(e.target.value)} />
+                        <input type='password' name='password' value={signinForm.password} onChange={handleChange} />
                     </div>
                     <button type='subit'>Sign-In</button>
                 </form>
