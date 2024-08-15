@@ -23,12 +23,12 @@ const SignIn = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { token, user } = await authService.signin({ username, password: pwd})
-            setUser(user);
+            const { token, user } = await authService.signin({ username: signinForm.username, password: signinForm.password})
+            props.setUser(user);
             navigate('/restaurants');
             window.location.reload();
-        } catch (e) {
-            setErr('Invalid credentials')
+        } catch (error) {
+            updateMessage(e)
         }
     }
 
@@ -36,7 +36,7 @@ const SignIn = (props) => {
         <>
             <div>
                 <h1>Welcome, Sign In</h1>
-                {err && <p style={{ color: 'red'}}>{err}</p>}
+                {message && <p style={{ color: 'red'}}>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username</label>
@@ -47,7 +47,7 @@ const SignIn = (props) => {
                         <input type='password' name='password' value={signinForm.password} onChange={handleChange} />
                     </div>
                     <button type='submit'>Sign-In</button>
-                    {err && <p> {err}</p>}
+                    {message && <p> {message}</p>}
                 </form>
             </div>
         </>
