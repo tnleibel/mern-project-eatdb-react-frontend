@@ -11,6 +11,7 @@ const Register = (props) => {
     })
     const navigate = useNavigate(); 
 
+
     const updateMessage = (msg) => {
         setMessage(msg)
     }
@@ -21,12 +22,16 @@ const Register = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            updateMessage("The passwords you provided do not match, please try again.");
+        return;
+        } 
         try {
             const response = await authService.signup(signupFormData)
-            props.setUser(response.user)
             navigate('/sign-in')
         } catch (error) {
             updateMessage(error.message)
+
         }
     }
 
@@ -42,7 +47,7 @@ const Register = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username </label>
-                        <input id='username' type='string' name='username' value={signupFormData.username} onChange={handleChange} />
+                        <input id='username' type='text' name='username' value={signupFormData.username} onChange={handleChange} />
                    </div>
                    <div>
                         <label htmlFor="pwd">Password</label>
@@ -52,8 +57,8 @@ const Register = (props) => {
                         <label htmlFor="confirm-pwd">Confirm Password</label>
                         <input id='confirmPwd' type='password' name='confirmPassword' value={signupFormData.confirmPassword} placeholder='must match password' onChange={handleChange} />
                    </div>
-                   
-                   <button disabled={isFormInvalid()}>Register</button>
+                   {err && <p className="error-message">{err}</p>}
+                   <button type="submit" disabled={isFormInvalid()}>Register</button>
                 </form>
             </div>
         </>

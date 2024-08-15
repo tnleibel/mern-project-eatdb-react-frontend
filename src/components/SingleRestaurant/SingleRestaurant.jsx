@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
+// import { IoIosStar } from "react-icons/io"; 
 import { Link, useParams } from "react-router-dom";
 
 //mocking a restaurant until the backend is done
 const mockRestaurant = [
-    {id: 1, name: 'pink onion', category: 'Italian', rating: 5, review: 'best pizza spot in SF'},
-    {id: 2, name: 'shi shi', category: 'Japanese', rating: 3, review: 'good vibes'},
-    {id: 3, name: 'linlin', category: 'Indian', rating: 3.5, review: 'had a great time with my wife, great service'},
-    {id: 4, name: 'sfasfa', category: 'American', rating: 0, review: 'terrible food and service'},
+    {id: 1, name: 'pink onion', category: 'Italian', rating: 5, review: 'best pizza spot in SF', foodList: []},
+    {id: 2, name: 'shi shi', category: 'Japanese', rating: 3, review: 'good vibes', foodList: []},
+    {id: 3, name: 'linlin', category: 'Indian', rating: 3.5, review: 'had a great time with my wife, great service', foodList: []},
+    {id: 4, name: 'sfasfa', category: 'American', rating: 0, review: 'terrible food and service', foodList: []},
 ]
 
 const SingleRestaurant = () => {
@@ -21,7 +22,7 @@ const SingleRestaurant = () => {
         setRestaurant(fetchedMockRestaurantById)
     }, [id]);
     if (!restaurant) {
-        <div>Loading the details of the clicked restaurant.....</div>
+        return <div>Loading the details of the clicked restaurant.....</div>
     }
     return (
         <>

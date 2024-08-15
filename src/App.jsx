@@ -17,6 +17,7 @@ const App = () => {
   const handleSignout = () => {
     authService.signout()
     setUser(null)
+    navigate('/signin')
   }
 
   const handleAddRestaurant = async (restaurantData) => {
@@ -39,6 +40,7 @@ const App = () => {
   useEffect (() => {
     const fetchRestaurants = async () => {
       const restaurantsData = await restaurantService.index()
+      setRestaurants(restaurantsData);
       console.log(('restaurantsData', restaurantsData))
     }
     if (user) fetchRestaurants()
@@ -51,10 +53,13 @@ const App = () => {
         {/* <Route path='/' element={<Landing />} /> */}
         <Route path='/sign-up' element={<Register setUser={setUser} />} />
         <Route path='/sign-in' element={<SignIn />} />
+
         <Route path='/restaurants' element={<Restaurant />} />
+        <Route path='/restaurants/:id' element={<SingleRestaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
         <Route path='/restaurants/:restaurantId' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
         <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
+        
       </Routes>
     </> 
   );
