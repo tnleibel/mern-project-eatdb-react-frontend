@@ -5,6 +5,7 @@ import { IoIosStar } from "react-icons/io";
 import * as restaurantService from '../../services/restaurantService';
 import * as authService from '../../services/authService';
 import { SiAwselasticloadbalancing } from 'react-icons/si';
+import mongoose from 'mongoose';
 
 //mocking a restaurant until the backend is done
 // const mockRestaurant = [
@@ -23,39 +24,82 @@ const Restaurant = () => {
     const [restaurants, setRestaurants] = useState([]);
     const [errMessage, setErrMessage] = useState(null);
     const [processing, setProcessing] = useState(true) // will use this to update the user while we are running async processes 
-                                                    // 
-    const userId = 1;
+    const [showEverything, setShowEverything] = useState(false) // will use this boolean to toggle between showing everything or just what the logged in user has created
+    const [userRestaurants, setUserRestaurants] = useState([]);
+    const getUserRestaurants = async (userId) => {
+        try {
+            const allRestaurantsOnDB = await restaurantService.index();
+            // so in the backend, the author is an object id
+            // which i think is the same as the user id (or atleast needs to be the same as the user id)
+            // so when creating a restaurants and putting it into the db
+            // I need assign the author value to be the users object id ( which are objects ) so I need to compare objects???
+            // can use mongoose.types.objectId to convert ids to object ids
+            // const newUserId = mongoose.Types.ObjectId(userId);
+            const userFilteredRestaurants = allRestaurantsOnDB.filter(restaurant => restaurant.author._id === userId);
+            setUserRestaurants(userFilteredRestaurants);
+        } catch (e) {
+            setErrMessage('error while getting restaunts that belong to the logged in user')
+            console.log(e);
+        } finally {
+            setProcessing(false);
+        }
+    }
+    const allRestaurants = async () => {
+        try {
+            const all = await restaurantService.index();
+            setRestaurants(all);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+
     useEffect(() => {
-        const userRestaurants = async () => {
+        const getData = async () => {
             try {
                 const user = authService.getUser();
                 if (user) {
                     const userId = user._id;
-                    const getRestaurants = await restaurantService.index();
-                    setRestaurants(getRestaurants);
-                } else {
+                    if (showEverything) {
+                        await allRestaurants();
+                    } else {
+                        getUserRestaurants(userId);
+                    }
+                }
+                else {
                     setErrMessage('The User does not seem to be logged in');
+                    setProcessing(false);
                 }
             } catch (e) {
-                setErrMessage('Error while fetching restaurants')
                 console.log(e);
-            } finally {
-                setProcessing(false);
-            }
+                setProcessing(false)
+            };
         };
-        userRestaurants();
-    }, []);
+        getData();
+    }, [showEverything]);
+
+    const handleShowEverything = () => {
+        setShowEverything(true);
+    }
+
+    const handleShowUserSpecificRestaurants = () => {
+        setShowEverything(false);
+    }
 
     if (processing) return <p>Still processing</p>
     if (errMessage) return <p>{errMessage}</p>
     return (
         <>
             <div>
-                <h1>All Restaurants</h1>
-                <Link to="/restaurants/new">Add Restaurant</Link>
-
+                <h1>{showEverything ? "All Restaurants" : "Your Restaurants"}</h1>
+                
+                <button onClick={handleShowUserSpecificRestaurants}>Your Restaurants</button>
+                <button onClick={handleShowEverything}>All Restaurants</button>
+                <button><Link to="/restaurants/new">Add Restaurant</Link></button>
                 <ul>
-                    {restaurants.map((restaurant) => (
+                    {(showEverything ? restaurants : userRestaurants).map((restaurant) => (
                         <li key={restaurant._id}>
                             <Link to={`/restaurants/${restaurant._id}`}>{restaurant.name}</Link>
                             <p>Ctg: {restaurant.category}</p>

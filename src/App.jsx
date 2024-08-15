@@ -23,12 +23,13 @@ const App = () => {
   const handleAddRestaurant = async (restaurantData) => {
     const newRestaurant = await restaurantService.create(restaurantData)
     setRestaurants([newRestaurant, ...restaurants])
+    navigate('/restaurants');
   }
 
   const handleDeleteRestaurant = async (restaurantId) => {
     const toDelete = await restaurantService.deleteRestaurant(restaurantId)
     setRestaurants(restaurants.filter((restaurant) => restaurant._id !== restaurantId))
-    navigate(`/restaurants/${restaurantId}`)
+    navigate(`/restaurants/`)
   }
 
   const handleUpdateRestaurant = async (restaurantId, restaurantData) => {
@@ -41,11 +42,13 @@ const App = () => {
 
   useEffect (() => {
     const fetchRestaurants = async () => {
-      const restaurantsData = await restaurantService.index()
-      setRestaurants(restaurantsData);
-      console.log(('restaurantsData', restaurantsData))
-    }
-    if (user) fetchRestaurants()
+      if (user) {
+        const restaurantsData = await restaurantService.index()
+        setRestaurants(restaurantsData);
+      }
+                              
+    };  
+    fetchRestaurants()
   }, [user])
   
   return (
@@ -53,15 +56,13 @@ const App = () => {
       <NavBar user={user} setUser={setUser} handleSignout={handleSignout} />
       <Routes>
         {/* <Route path='/' element={<Landing />} /> */}
-        <Route path='/sign-up' element={<Register setUser={setUser} />} />
-        <Route path='/sign-in' element={<SignIn  setUser={setUser} />} />
-
+        <Route path='/sign-up' element={<Register />} />
+        <Route path='/sign-in' element={<SignIn setUser={setUser}/>} />
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/:id' element={<SingleRestaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
         <Route path='/restaurants/:restaurantId' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
         <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
-        
       </Routes>
     </> 
   );

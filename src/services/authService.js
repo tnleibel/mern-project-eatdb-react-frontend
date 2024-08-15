@@ -38,7 +38,7 @@ const signin = async (formData) => {
             localStorage.setItem('token', json.token)
             const user = jwtDecode(json.token);
             // const user = JSON.parse(atob(json.token.split('.')[1]))
-            return user
+            return { token: json.token, user };
         }
     } catch (error) {
         console.log(error)

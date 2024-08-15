@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as authService from "../../services/authService"; 
 
-const SignIn = (props) => {
+const SignIn = ({ setUser }) => {
     const [message, setMessage] = useState([''])
     const [signinForm, setSigninForm] = useState({
         username: '',
@@ -16,7 +16,7 @@ const SignIn = (props) => {
     }
 
     const handleChange = (e) => {
-        updateMessage('')
+        setMessage('')
         setSigninForm({ ...signinForm, [e.target.name]: e.target.value })
     }
 
@@ -24,10 +24,9 @@ const SignIn = (props) => {
         e.preventDefault();
         try {
             const { token, user } = await authService.signin({ username: signinForm.username, password: signinForm.password})
-            props.setUser(user);
-            navigate('/restaurants');
-            window.location.reload();
-        } catch (error) {
+            setUser(user);
+            navigate('/restaurants');                                                          
+        } catch (e) {
             updateMessage(e)
         }
     }

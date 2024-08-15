@@ -1,7 +1,7 @@
-const FoodIndex = (props) => {
-    return (
-        <main>
-            {props.}
-        </main>
-    )
-}
+// const FoodIndex = (props) => {
+//     return (
+//         <main>
+//             {props.}
+//         </main>
+//     )
+// }
