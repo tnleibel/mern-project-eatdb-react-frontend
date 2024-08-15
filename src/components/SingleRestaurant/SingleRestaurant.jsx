@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 // import { IoIosStar } from "react-icons/io"; 
 import { Link, useParams } from "react-router-dom";
+import * as authService from '../../services/authService'
+import * as restaurantService from '../../services/restaurantService'
 
 //mocking a restaurant until the backend is done
 const mockRestaurant = [
@@ -13,6 +15,11 @@ const mockRestaurant = [
 const SingleRestaurant = () => {
     const [restaurant, setRestaurant] = useState(null);
     const { id } = useParams();
+
+    const handleAddFood = async (foodFormData) => {
+        const newFood = await restaurantService.createFood(restaurantId, foodFormData)
+        setRestaurant({ ...restaurant, foodList: [...restaurant.foodList, newFood] })
+      }
 
     useEffect(() => {
         // will need to fetch the details of restaurants by id after backend is done
