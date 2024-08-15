@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as authService from "../../services/authService"; 
 
-const SignIn = (props) => {
+const SignIn = ({ setUser }) => {
     const [message, setMessage] = useState([''])
     const [signinForm, setSigninForm] = useState({
         username: '',
@@ -16,19 +16,18 @@ const SignIn = (props) => {
     }
 
     const handleChange = (e) => {
-        updateMessage('')
+        setMessage('')
         setSigninForm({ ...signinForm, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { token, user } = await authService.signin({ username, password: pwd})
+            const { token, user } = await authService.signin({ username: signinForm.username, password: signinForm.password})
             setUser(user);
-            navigate('/restaurants');
-            window.location.reload();
+            navigate('/restaurants');                                                          
         } catch (e) {
-            setErr('Invalid credentials')
+            setMessage('Invalid credentials')
         }
     }
 
@@ -36,7 +35,7 @@ const SignIn = (props) => {
         <>
             <div>
                 <h1>Welcome, Sign In</h1>
-                {err && <p style={{ color: 'red'}}>{err}</p>}
+                {message && <p style={{ color: 'red'}}>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="username">Username</label>
@@ -47,7 +46,7 @@ const SignIn = (props) => {
                         <input type='password' name='password' value={signinForm.password} onChange={handleChange} />
                     </div>
                     <button type='submit'>Sign-In</button>
-                    {err && <p> {err}</p>}
+                    {message && <p> {message}</p>}
                 </form>
             </div>
         </>

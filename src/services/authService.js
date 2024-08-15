@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode"
 
 const signup = async (formData) => {
     try {
-        const res = await fetch(`${BACKEND_URL}/users/signup`, {
+        const res = await fetch(`${BACKEND_URL}/users/sign-up`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
@@ -24,7 +24,7 @@ const signup = async (formData) => {
 
 const signin = async (formData) => {
     try {
-        const res = await fetch(`${BACKEND_URL}/users/signin`, {
+        const res = await fetch(`${BACKEND_URL}/users/sign-in`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
@@ -37,7 +37,7 @@ const signin = async (formData) => {
             localStorage.setItem('token', json.token)
             const user = jwtDecode(json.token);
             // const user = JSON.parse(atob(json.token.split('.')[1]))
-            return user
+            return { token: json.token, user };
         }
     } catch (error) {
         console.log(error)

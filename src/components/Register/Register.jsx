@@ -27,7 +27,7 @@ const Register = (props) => {
         return;
         } 
         try {
-            const response = await authService.signup(signupFormData)
+            await authService.signup(signupFormData)
             navigate('/sign-in')
         } catch (error) {
             updateMessage(error.message)
@@ -57,7 +57,7 @@ const Register = (props) => {
                         <label htmlFor="confirm-pwd">Confirm Password</label>
                         <input id='confirmPwd' type='password' name='confirmPassword' value={signupFormData.confirmPassword} placeholder='must match password' onChange={handleChange} />
                    </div>
-                   {err && <p className="error-message">{err}</p>}
+                   {message && <p className="error-message">{message}</p>}
                    <button type="submit" disabled={isFormInvalid()}>Register</button>
                 </form>
             </div>
