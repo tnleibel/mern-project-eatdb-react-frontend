@@ -11,18 +11,6 @@ const Register = (props) => {
   const handleChange = async (e) => {
     setSignupFormData({ ...signupFormData, [e.target.name]: e.target.value });
   }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (signupFormData.password !== signupFormData.confirmPassword) {
-      updateMessage("The passwords you provided do not match, please try again.");
-      return;
-    }
-    try {
-      const response = await authService.signup(signupFormData);
-      navigate('/sign-in');
-    } catch (error) {
-      updateMessage(error.message);
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,4 +57,5 @@ const Register = (props) => {
         </>
     )
 }
-export default Register;
+
+export default Register

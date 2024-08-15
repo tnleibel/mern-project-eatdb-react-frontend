@@ -8,6 +8,8 @@ import NavBar from './components/NavBar/NavBar';
 import Restaurant from './components/Restaurant.jsx/Restaurant';
 import RestaurantForm from './components/RestaurantForm/RestaurantForm';
 import SingleRestaurant from './components/SingleRestaurant/SingleRestaurant';
+import FoodForm from './components/FoodForm/FoodForm';
+import FoodIndex from './components/FoodIndex/FoodIndex';
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -17,7 +19,7 @@ const App = () => {
 
     authService.signout();
     setUser(null);
-    navigate('/signin');
+    navigate('/sign-in');
   };
   const handleAddRestaurant = async (restaurantData) => {
     const newRestaurant = await restaurantService.create(restaurantData);
@@ -33,6 +35,7 @@ const App = () => {
     setRestaurants(restaurants.map((restaurant) => (restaurantId === restaurant._id ? toUpdate : restaurant)));
     navigate(`/restaurants/${restaurantId}`);
   };
+
   useEffect(() => {
     const fetchRestaurants = async () => {
       const restaurantsData = await restaurantService.index();

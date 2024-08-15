@@ -10,6 +10,8 @@ const FoodForm = (props) => {
         ingredients: ''
     })
 
+    const { id } = useParams()
+
     const handleChange = (event) => {
         setFoodFormData({ ...foodFormData, [event.target.name]: event.target.value });
     };
@@ -20,13 +22,13 @@ const FoodForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        props.handleAddFood(foodFormData)
+        props.handleAddFood(id, foodFormData)
     }
 
     return(
         <main>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name-input">Name:</label>
+                <label htmlFor="name">Name:</label>
                 <input
                     required
                     type="text"
@@ -35,7 +37,7 @@ const FoodForm = (props) => {
                     value={foodFormData.name}
                     onChange={handleChange}
                 />
-                <label htmlFor="isVegan-input">Vegan?</label>
+                <label htmlFor="isVegan">Vegan?</label>
                 <input
                     type="checkbox"
                     name="isVegan"
@@ -43,7 +45,7 @@ const FoodForm = (props) => {
                     checked={foodFormData.isVegan}
                     onChange={handleCheckbox}
                 />
-                <label htmlFor="price-input">Price:</label>
+                <label htmlFor="price">Price:</label>
                 <input
                     type="text"
                     name="price"
@@ -51,7 +53,7 @@ const FoodForm = (props) => {
                     value={foodFormData.price}
                     onChange={handleChange}
                 />
-                <label htmlFor="rating-input">Rating:</label>
+                <label htmlFor="rating">Rating:</label>
                 <select
                     name="rating"
                     id="rating-input"
@@ -65,7 +67,7 @@ const FoodForm = (props) => {
                     <option value={4}>4</option>
                     <option value={5}>5</option>
                 </select>
-                <label htmlFor="ingredients-input">Ingredients:</label>
+                <label htmlFor="ingredients">Ingredients:</label>
                 <input
                     type="text-area"
                     name="ingredients"
@@ -73,6 +75,7 @@ const FoodForm = (props) => {
                     value={foodFormData.ingredients}
                     onChange={handleChange}
                 />
+                <button type="submit">Submit</button>
             </form>
         </main>
     )
