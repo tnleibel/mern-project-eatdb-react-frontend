@@ -44,7 +44,7 @@ const SignIn = (props) => {
                         <label htmlFor="pwd">Password</label>
                         <input type='password' name='password' value={signinForm.password} onChange={handleChange} />
                     </div>
-                    <button type='subit'>Sign-In</button>
+                    <button type='submit'>Sign-In</button>
                 </form>
             </div>
         </>

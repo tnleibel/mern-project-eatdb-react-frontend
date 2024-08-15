@@ -53,7 +53,7 @@ const Register = (props) => {
                         <input id='confirmPwd' type='password' name='confirmPassword' value={signupFormData.confirmPassword} placeholder='must match password' onChange={handleChange} />
                    </div>
                    
-                   <button disabled={isFormInvalid()}>Register</button>
+                   <button type="submit" disabled={isFormInvalid()}>Register</button>
                 </form>
             </div>
         </>
