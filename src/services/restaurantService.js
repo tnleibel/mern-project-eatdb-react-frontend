@@ -32,7 +32,7 @@ const create = async (restaurantData) => {
             },
             body: JSON.stringify(restaurantData)
         })
-        return res.json
+        return res.json();
     } catch (error) {
         console.log(error)
     }
