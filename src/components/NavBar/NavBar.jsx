@@ -19,10 +19,10 @@ const NavBar = ({ user, handleSignout }) => {
         ) : (
           <>
             <li>
-              <Link to="/sign-in">Sign In</Link>
+              <Link to="/users/sign-in">Sign In</Link>
             </li>
             <li>
-              <Link to="/sign-up">Register</Link>
+              <Link to="/users/sign-up">Register</Link>
             </li>
           </>
         )}
