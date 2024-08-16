@@ -15,6 +15,7 @@ const show = async (restuarantId) => {
     try {
         const res = await fetch(`${BACKEND_URL}/${restuarantId}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}`},
+            'Content-Type': 'application/json',
         })
         return res.json()
     } catch (error) {
