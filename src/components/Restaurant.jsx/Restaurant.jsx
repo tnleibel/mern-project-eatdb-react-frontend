@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// importing star from react
-import { IoIosStar } from "react-icons/io"; 
+import { IoIosStar } from "react-icons/io";
 import * as restaurantService from '../../services/restaurantService';
 import * as authService from '../../services/authService';
+import styles from './Restaurant.module.css';
 import { SiAwselasticloadbalancing } from 'react-icons/si';
 import mongoose from 'mongoose';
 

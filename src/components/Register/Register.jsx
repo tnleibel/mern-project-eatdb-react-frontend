@@ -1,24 +1,24 @@
-import { useState } from "react"
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as authService from '../../services/authService'
+import * as authService from '../../services/authService';
 
 const Register = (props) => {
-    const [message, setMessage] = useState([''])
-    const [signupFormData, setSignupFormData] = useState({
-        username: '',
-        password: '',
-        confirmPassword: ''
-    })
-    const navigate = useNavigate(); 
-
-
-    const updateMessage = (msg) => {
-        setMessage(msg)
-    }
-
-    const handleChange = async (e) => {
-        setSignupFormData({ ...signupFormData, [e.target.name]: e.target.value })
-    }
+  const [message, setMessage] = useState(['']);
+  const [signupFormData, setSignupFormData] = useState({
+    username: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const navigate = useNavigate();
+  const updateMessage = (msg) => {
+    setMessage(msg);
+  }
+  const handleChange = async (e) => {
+    setSignupFormData({
+      ...signupFormData,
+      [e.target.name]: e.target.value
+    });
+  }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -65,4 +65,4 @@ const Register = (props) => {
     )
 }
 
-export default Register;
+export default Register

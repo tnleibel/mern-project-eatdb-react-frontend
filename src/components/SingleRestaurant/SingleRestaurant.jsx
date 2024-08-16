@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 // import { IoIosStar } from "react-icons/io"; 
-import { Link, useParams } from "react-router-dom";
-import * as restaurantService from '../../services/restaurantService';
+import { Routes, Route, Link, useParams } from "react-router-dom";
+import * as authService from '../../services/authService'
+import * as restaurantService from '../../services/restaurantService'
+import FoodForm from "../FoodForm/FoodForm";
+import FoodIndex from "../FoodIndex/FoodIndex";
+
 
 //mocking a restaurant until the backend is done
 // const mockRestaurant = [
@@ -16,7 +20,7 @@ const SingleRestaurant = () => {
     const { id } = useParams();
 
     const handleAddFood = async (foodFormData) => {
-        const newFood = await restaurantService.createFood(restaurantId, foodFormData)
+        const newFood = await restaurantService.createFood(id, foodFormData)
         setRestaurant({ ...restaurant, foodList: [...restaurant.foodList, newFood] })
       }
 
@@ -39,6 +43,7 @@ const SingleRestaurant = () => {
                 <p>Rating: {restaurant.rating}</p>
                 <p>Reviews: {restaurant.review}</p>
                 <h3><strong>FoodList</strong></h3>
+                <FoodForm handleAddFood={handleAddFood} />
                 <ul>
                     {restaurant.foodList.length > 0 ? (
                         restaurant.foodList.map((food, index) => (
@@ -48,14 +53,14 @@ const SingleRestaurant = () => {
                                 <p>{food.isVegan ? "Vegan" : "Not Vegan"}</p>
                                 <p>Food Rating: {food.rating}</p>
                                 <p>Price: {food.price}</p>
-                                <Link to={`/restaurants/${id}/food/edit/${food._id}`}>Edit Food</Link>
+                                <Link to={`/restaurants/${id}/foods/edit/${food._id}`}>Edit Food</Link>
                             </li>
                         ))
                     ) : (
                         <p>Nothing is in foodList</p>
                     )} 
                 </ul>
-                <Link to={`/restaurants/${id}/food/new`}>Add Food/Menu</Link>
+                <Link to={`/restaurants/${id}/foods/new`}>Add Food/Menu</Link>
             </div>
         </>
     ) 
