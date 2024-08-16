@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import styles from './NavBar.module.css';
-
+import logo from './logo.jpg';
 
 const NavBar = ({ user, handleSignout }) => {
   return (
     <nav className={styles.container}>
+      <Link to='/'><img src={logo} alt="A Restaurant" className={styles.logo} /></Link>
       <ul>
         {user ? (
           <>

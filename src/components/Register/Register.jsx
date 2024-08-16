@@ -9,6 +9,7 @@ const Register = (props) => {
       password: '',
       confirmPassword: '',
     });
+
     const navigate = useNavigate();
     const updateMessage = (msg) => {
       setMessage(msg);

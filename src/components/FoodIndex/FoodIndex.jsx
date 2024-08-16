@@ -22,3 +22,4 @@ const FoodIndex = (props) => {
   );
 };
 export default FoodIndex;
+
