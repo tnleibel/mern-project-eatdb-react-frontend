@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import styles from './FoodForm.module.css';
 
 const FoodForm = (props) => {
+
   const [foodFormData, setFoodFormData] = useState({
     name: '',
     isVegan: false,
@@ -10,7 +11,8 @@ const FoodForm = (props) => {
     price: '',
     ingredients: ''
   });
-  const { id } = useParams();
+  const id  = useParams();
+  
   const handleChange = (event) => {
     setFoodFormData({
       ...foodFormData,
@@ -37,7 +39,7 @@ const FoodForm = (props) => {
               required
               type="text"
               name="name"
-              id="name-input"
+              id="name"
               value={foodFormData.name}
               onChange={handleChange}
             />
@@ -45,7 +47,7 @@ const FoodForm = (props) => {
             <input
               type="checkbox"
               name="isVegan"
-              id="isVegan-input"
+              id="isVegan"
               checked={foodFormData.isVegan}
               onChange={handleCheckbox}
             />
@@ -53,14 +55,14 @@ const FoodForm = (props) => {
             <input
               type="text"
               name="price"
-              id="price-input"
+              id="price"
               value={foodFormData.price}
               onChange={handleChange}
             />
             <label htmlFor="rating">Rating:</label>
             <select
               name="rating"
-              id="rating-input"
+              id="rating"
               value={foodFormData.rating}
               onChange={handleChange}
             >

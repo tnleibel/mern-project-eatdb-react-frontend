@@ -15,12 +15,13 @@ import FoodIndex from "../FoodIndex/FoodIndex";
 //     {id: 4, name: 'sfasfa', category: 'American', rating: 0, review: 'terrible food and service', foodList: []},
 // ]
 
-const SingleRestaurant = () => {
+const SingleRestaurant = (props) => {
     const [restaurant, setRestaurant] = useState(null);
     const { id } = useParams();
 
-    const handleAddFood = async (foodFormData) => {
+    const handleAddFood = async (id, foodFormData) => {
         const newFood = await restaurantService.createFood(id, foodFormData)
+        console.log(newFood)
         setRestaurant({ ...restaurant, foodList: [...restaurant.foodList, newFood] })
       }
 
@@ -42,6 +43,8 @@ const SingleRestaurant = () => {
                 <p>Ctg: {restaurant.category}</p>
                 <p>Rating: {restaurant.rating}</p>
                 <p>Reviews: {restaurant.review}</p>
+                <Link to={`/restaurants/${id}/edit`}>Edit</Link>
+                <button onClick={() => props.handleDeleteRestaurant(id)}>Delete</button>
                 <h3><strong>FoodList</strong></h3>
                 <FoodForm handleAddFood={handleAddFood} />
                 <ul>
