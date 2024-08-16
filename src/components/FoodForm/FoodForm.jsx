@@ -28,7 +28,7 @@ const FoodForm = (props) => {
     return(
         <main>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="name-input">Name:</label>
                 <input
                     required
                     type="text"
@@ -37,7 +37,7 @@ const FoodForm = (props) => {
                     value={foodFormData.name}
                     onChange={handleChange}
                 />
-                <label htmlFor="isVegan">Vegan?</label>
+                <label htmlFor="isVegan-input">Vegan?</label>
                 <input
                     type="checkbox"
                     name="isVegan"
@@ -45,7 +45,7 @@ const FoodForm = (props) => {
                     checked={foodFormData.isVegan}
                     onChange={handleCheckbox}
                 />
-                <label htmlFor="price">Price:</label>
+                <label htmlFor="price-input">Price:</label>
                 <input
                     type="text"
                     name="price"
@@ -53,7 +53,7 @@ const FoodForm = (props) => {
                     value={foodFormData.price}
                     onChange={handleChange}
                 />
-                <label htmlFor="rating">Rating:</label>
+                <label htmlFor="rating-input">Rating:</label>
                 <select
                     name="rating"
                     id="rating-input"
@@ -67,7 +67,7 @@ const FoodForm = (props) => {
                     <option value={4}>4</option>
                     <option value={5}>5</option>
                 </select>
-                <label htmlFor="ingredients">Ingredients:</label>
+                <label htmlFor="ingredients-input">Ingredients:</label>
                 <input
                     type="text-area"
                     name="ingredients"

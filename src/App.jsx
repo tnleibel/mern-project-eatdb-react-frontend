@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import * as authService from '../src/services/authService';
 import * as restaurantService from '../src/services/restaurantService';
@@ -10,6 +10,8 @@ import RestaurantForm from './components/RestaurantForm/RestaurantForm';
 import SingleRestaurant from './components/SingleRestaurant/SingleRestaurant';
 import FoodForm from './components/FoodForm/FoodForm';
 import FoodIndex from './components/FoodIndex/FoodIndex';
+
+export const AuthedUserContext = createContext(null)
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());
@@ -26,7 +28,7 @@ const App = () => {
     setRestaurants([newRestaurant, ...restaurants]);
   };
   const handleDeleteRestaurant = async (restaurantId) => {
-    const toDelete = await restaurantService.deleteRestaurant(restaurantId);
+    await restaurantService.deleteRestaurant(restaurantId);
     setRestaurants(restaurants.filter((restaurant) => restaurant._id !== restaurantId));
     navigate(`/restaurants/${restaurantId}`);
   };
@@ -52,10 +54,9 @@ const App = () => {
         <Route path='/sign-up' element={<Register />} />
         <Route path='/sign-in' element={<SignIn setUser={setUser}/>} />
         <Route path='/restaurants' element={<Restaurant />} />
-        <Route path='/restaurants/:id' element={<SingleRestaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
-        <Route path='/restaurants/:restaurantId' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
-        <Route path='/restaurants/:restaurantId/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
+        <Route path='/restaurants/:id' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
+        <Route path='/restaurants/:id/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
       </Routes>
     </>
   );
