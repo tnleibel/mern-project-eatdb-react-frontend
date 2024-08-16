@@ -69,7 +69,7 @@ async function update(restuarantId, restaurantData) {
 
 const createFood = async (restaurantId, foodFormData) => {
     try {
-        const res = await fetch(`${BACKEND_URL}/${restaurantId}/foods`, {
+        const res = await fetch(`${BACKEND_URL}/${restaurantId}`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
