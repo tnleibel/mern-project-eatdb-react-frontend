@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 // import { IoIosStar } from "react-icons/io"; 
-import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as authService from '../../services/authService'
 import * as restaurantService from '../../services/restaurantService'
 import FoodForm from "../FoodForm/FoodForm";
-import FoodIndex from "../FoodIndex/FoodIndex";
-
 
 //mocking a restaurant until the backend is done
 // const mockRestaurant = [
@@ -18,11 +16,13 @@ import FoodIndex from "../FoodIndex/FoodIndex";
 const SingleRestaurant = () => {
     const [restaurant, setRestaurant] = useState(null);
     const { id } = useParams();
+    const [showPopup, setShowPopup] = useState(false) // will use this to control popup form visibility
 
     const handleAddFood = async (foodFormData) => {
         const newFood = await restaurantService.createFood(id, foodFormData)
         setRestaurant({ ...restaurant, foodList: [...restaurant.foodList, newFood] })
-      }
+        setShowPopup(false);
+    }
 
     useEffect(() => {
         const getSingleRestaurant = async () => {
@@ -43,7 +43,6 @@ const SingleRestaurant = () => {
                 <p>Rating: {restaurant.rating}</p>
                 <p>Reviews: {restaurant.review}</p>
                 <h3><strong>FoodList</strong></h3>
-                <FoodForm handleAddFood={handleAddFood} />
                 <ul>
                     {restaurant.foodList.length > 0 ? (
                         restaurant.foodList.map((food, index) => (
@@ -53,15 +52,26 @@ const SingleRestaurant = () => {
                                 <p>{food.isVegan ? "Vegan" : "Not Vegan"}</p>
                                 <p>Food Rating: {food.rating}</p>
                                 <p>Price: {food.price}</p>
-                                <Link to={`/restaurants/${id}/foods/edit/${food._id}`}>Edit Food</Link>
+                                <Link to={`/restaurants/${id}/food/edit/${food._id}`}>Edit Food</Link>
                             </li>
                         ))
                     ) : (
                         <p>Nothing is in foodList</p>
                     )} 
                 </ul>
-                <Link to={`/restaurants/${id}/foods/new`}>Add Food/Menu</Link>
+                <button onClick={() => setShowPopup(true)}>Add Food</button>
+                {/* <FoodForm handleAddFood={handleAddFood} />
+                <Link to={`/restaurants/${id}/food/new`}>Add Food/Menu</Link> */}
             </div>
+            {showPopup && (
+                <div className="popup">
+                    <div className="popup-content">
+                        <span className="close" onClick={() => setShowPopup(false)}>&times;</span> 
+                        {/* we are clsoing closing the popup ^ */}
+                        <FoodForm handleAddFood={handleAddFood} />
+                    </div>
+                </div>
+            )}
         </>
     ) 
 }
