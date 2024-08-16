@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import * as authService from '../src/services/authService';
 import * as restaurantService from '../src/services/restaurantService';
@@ -9,6 +9,8 @@ import Restaurant from './components/Restaurant.jsx/Restaurant';
 import RestaurantForm from './components/RestaurantForm/RestaurantForm';
 import SingleRestaurant from './components/SingleRestaurant/SingleRestaurant';
 import Landing from './components/Landing/Landing'
+
+export const AuthedUserContext = createContext(null)
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser());

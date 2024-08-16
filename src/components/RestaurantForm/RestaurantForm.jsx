@@ -13,42 +13,46 @@ const RestaurantForm = (props) => {
   });
   const navigate = useNavigate();
   const { id } = useParams();
-  useEffect(() => {
-    const fetchRestaurant = async () => {
-      if (id) {
-        try {
-          const data = await restaurantService.show(id);
-          setRestaurant(data);
-        } catch (error) {
-          console.error('Error fetching restaurant:', error);
-        }
-      }
-    };
-    fetchRestaurant();
-  }, [id]);
+
+
   const handleChange = (event) => {
     setRestaurant({ ...restaurant, [event.target.name]: event.target.value });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       if (id) {
-        await restaurantService.update(id, restaurant);
+        console.log(id)
+        props.handleUpdateRestaurant(id, restaurant)
         navigate(`/restaurants/${id}`);
       } else {
-        await props.handleAddRestaurant(restaurant);
+        console.log('no ID')
+        props.handleAddRestaurant(restaurant);
         navigate('/restaurants');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
     }
   };
+
+  useEffect(() => {
+    const getSingleRestaurant = async () => {
+      if(id) {
+        const returnedData = await restaurantService.show(id);
+        setRestaurant(returnedData);
+      }
+    } 
+    getSingleRestaurant();
+    
+}, [id]);
+
   return (
     <main className={styles.container}>
       <header>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name">Restaurant Name:</label>
+            <label htmlFor="name-input">Restaurant Name:</label>
             <input
               type="text"
               name="name"
@@ -58,7 +62,7 @@ const RestaurantForm = (props) => {
             />
           </div>
           <div>
-            <label htmlFor="category">Category:</label>
+            <label htmlFor="category-input">Category:</label>
             <input
               type="text"
               name="category"
@@ -68,7 +72,7 @@ const RestaurantForm = (props) => {
             />
           </div>
           <div>
-            <label>Rating:</label>
+            <label htmlFor="rating-input">Rating:</label>
             <input
               value={restaurant.rating}
               type="number"
@@ -81,7 +85,7 @@ const RestaurantForm = (props) => {
             />
           </div>
           <div>
-            <label htmlFor="review">Review:</label>
+            <label htmlFor="review-input">Review:</label>
             <textarea
               name="review"
               id="review"
