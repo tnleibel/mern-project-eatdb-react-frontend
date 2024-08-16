@@ -28,16 +28,16 @@ const SignIn = ({ setUser }) => {
         password: signinForm.password
       });
       setUser(user);
-      navigate('/restaurants');
+      navigate('/');
     } catch (e) {
       updateMessage(e.message);
     }
   };
   return (
-    <main className={styles.container}>
-      <div>
+    <main className={styles.signinContainer}>
+      <div className={styles['form-wrap']}>
         <h1>Welcome, Sign In</h1>
-        {message && <p style={{ color: 'red'}}>{message}</p>}
+        {message && <p className={styles['error-message']}>{message}</p>}
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username">Username</label>

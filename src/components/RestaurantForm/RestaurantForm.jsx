@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import * as restaurantService from '../../services/restaurantService';
 import styles from './RestaurantForm.module.css';
 
-const RestaurantForm = (props) => {
+const RestaurantForm = ({handleAddRestaurant, handleUpdateRestaurant}) => {
   const [restaurant, setRestaurant] = useState({
     name: '',
     category: '',
@@ -33,12 +33,11 @@ const RestaurantForm = (props) => {
     event.preventDefault();
     try {
       if (id) {
-        await restaurantService.update(id, restaurant);
-        navigate(`/restaurants/${id}`);
+        await handleUpdateRestaurant(id, restaurant);
       } else {
-        await props.handleAddRestaurant(restaurant);
-        navigate('/restaurants');
+        await handleAddRestaurant(restaurant);
       }
+      navigate('/restaurants');
     } catch (error) {
       console.error('Error submitting form:', error);
     }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as authService from '../../services/authService';
+import styles from './Register.module.css';
 
 const Register = (props) => {
   const [message, setMessage] = useState(['']);
@@ -42,7 +43,7 @@ const Register = (props) => {
     };
     return (
         <>
-            <div>
+            <div className={styles['register-container']}>
                 <h1>Create A New Account</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -57,7 +58,7 @@ const Register = (props) => {
                         <label htmlFor="confirm-pwd">Confirm Password</label>
                         <input id='confirm-pwd' type='password' name='confirmPassword' value={confirmPassword} placeholder='must match password' onChange={handleChange} />
                    </div>
-                   {message && <p className="error-message">{message}</p>}
+                   {message && <p className={styles['error-message']}>{message}</p>}
                    <button type="submit" disabled={isFormInvalid()}>Register</button>
                 </form>
             </div>

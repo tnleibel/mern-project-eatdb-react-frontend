@@ -22,7 +22,7 @@ const FoodForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        props.handleAddFood(id, foodFormData)
+        props.handleAddFood(foodFormData) // could add id to make it user specific
     }
 
     return(
@@ -60,15 +60,18 @@ const FoodForm = (props) => {
                     value={foodFormData.rating}
                     onChange={handleChange}
                 >
-                    <option value={0}>0</option>
+                    {/* <option value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    <option value={5}>5</option>
+                    <option value={5}>5</option> */}
+                    {[0, 1, 2, 3, 4, 5].map(n => (
+                        <option key={n} value={n}>{n}</option>
+                    ))}
                 </select>
                 <label htmlFor="ingredients">Ingredients:</label>
-                <input
+                <textarea
                     type="text-area"
                     name="ingredients"
                     id="ingredients-input"

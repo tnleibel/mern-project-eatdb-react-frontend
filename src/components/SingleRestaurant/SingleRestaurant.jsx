@@ -19,9 +19,17 @@ const SingleRestaurant = () => {
     const [showPopup, setShowPopup] = useState(false) // will use this to control popup form visibility
 
     const handleAddFood = async (foodFormData) => {
-        const newFood = await restaurantService.createFood(id, foodFormData)
-        setRestaurant({ ...restaurant, foodList: [...restaurant.foodList, newFood] })
-        setShowPopup(false);
+        try {
+            const newFood = await restaurantService.createFood(id, foodFormData)
+            setRestaurant((prevRestaurant) => ({
+                ...prevRestaurant,
+                foodList: [...prevRestaurant.foodList, newFood],
+            }));
+            setShowPopup(false);
+        } catch (e) {
+            console.log('Adding food was unsuccessful', e);
+        }
+        
     }
 
     useEffect(() => {
@@ -45,8 +53,8 @@ const SingleRestaurant = () => {
                 <h3><strong>FoodList</strong></h3>
                 <ul>
                     {restaurant.foodList.length > 0 ? (
-                        restaurant.foodList.map((food, index) => (
-                            <li key={index}>
+                        restaurant.foodList.map((food) => (
+                            <li key={food._id}>
                                 <p>{food.name}</p>
                                 <p>{food.ingredients}</p>
                                 <p>{food.isVegan ? "Vegan" : "Not Vegan"}</p>
@@ -60,14 +68,12 @@ const SingleRestaurant = () => {
                     )} 
                 </ul>
                 <button onClick={() => setShowPopup(true)}>Add Food</button>
-                {/* <FoodForm handleAddFood={handleAddFood} />
-                <Link to={`/restaurants/${id}/food/new`}>Add Food/Menu</Link> */}
             </div>
             {showPopup && (
                 <div className="popup">
                     <div className="popup-content">
                         <span className="close" onClick={() => setShowPopup(false)}>&times;</span> 
-                        {/* we are clsoing closing the popup ^ */}
+                        {/* we are closing the popup ^ */}
                         <FoodForm handleAddFood={handleAddFood} />
                     </div>
                 </div>

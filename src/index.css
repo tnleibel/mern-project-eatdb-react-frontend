@@ -1,3 +1,10 @@
+:root {
+  --primary: #00a0df;
+  --background: #f2f4f8;
+  --card-background: white;
+  --border: rgba(220, 220, 220);
+}
+
 * {
   box-sizing: border-box;
 }

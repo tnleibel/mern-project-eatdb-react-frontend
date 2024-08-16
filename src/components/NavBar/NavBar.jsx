@@ -14,13 +14,11 @@ const NavBar = ({ user, handleSignout }) => {
           </>
         ) : (
           <>
-            <li><Link to="/signin">Sign In</Link></li>
-            <li><Link to="/signup">Register</Link></li>
+            <li><Link to="/sign-in">Sign In</Link></li>
+            <li><Link to="/sign-up">Register</Link></li>
+            <li><Link to='/restaurants'>Explore Restaurants</Link></li>
           </>
         )}
-        <li>
-          <Link to='/restaurants'>All Restaurants</Link>
-        </li>
       </ul>
     </nav>
   );

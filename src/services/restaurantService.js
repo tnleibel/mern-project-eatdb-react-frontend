@@ -82,6 +82,14 @@ const createFood = async (restaurantId, foodFormData) => {
     }
 }
 
+const guestPreview = async () => {
+    try {
+        const res = await fetch(`${BACKEND_URL}/preview`);
+        return res.json();
+    } catch (error) {
+        console.log(e);
+    } 
+}
 export {
     index,
     show,
@@ -89,4 +97,5 @@ export {
     deleteRestaurant,
     update,
     createFood,
+    guestPreview,
 }
