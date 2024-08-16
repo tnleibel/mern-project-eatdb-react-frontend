@@ -1,4 +1,4 @@
-
+![EatDB Screenshot](https://i.imgur.com/psFmdWE.png)
 
 **INTRO**
 
