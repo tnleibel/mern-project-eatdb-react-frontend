@@ -87,7 +87,7 @@ const guestPreview = async () => {
         const res = await fetch(`${BACKEND_URL}/preview`);
         return res.json();
     } catch (error) {
-        console.log(e);
+        console.log(error);
     } 
 }
 export {
