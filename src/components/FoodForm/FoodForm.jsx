@@ -1,31 +1,35 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import styles from './FoodForm.module.css';
 
 const FoodForm = (props) => {
-    const [foodFormData, setFoodFormData] = useState({
-        name: '',
-        isVegan: false,
-        rating: 0,
-        price: '',
-        ingredients: ''
-    })
-
-    const { id } = useParams()
-
-    const handleChange = (event) => {
-        setFoodFormData({ ...foodFormData, [event.target.name]: event.target.value });
-    };
-
-    const handleCheckbox = (event) => {
-        setFoodFormData({ ...foodFormData,[event.target.name]: event.target.checked })
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        props.handleAddFood(id, foodFormData)
-    }
-
-    return(
+  const [foodFormData, setFoodFormData] = useState({
+    name: '',
+    isVegan: false,
+    rating: 0,
+    price: '',
+    ingredients: ''
+  });
+  const { id } = useParams();
+  const handleChange = (event) => {
+    setFoodFormData({
+      ...foodFormData,
+      [event.target.name]: event.target.value
+    });
+  };
+  const handleCheckbox = (event) => {
+    setFoodFormData({
+      ...foodFormData,
+      [event.target.name]: event.target.checked
+    });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.handleAddFood(id, foodFormData);
+  };
+  return (
+    <div className={styles.container}>
+      <nav>
         <main>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name-input">Name:</label>
@@ -78,7 +82,8 @@ const FoodForm = (props) => {
                 <button type="submit">Submit</button>
             </form>
         </main>
-    )
-}
-
-export default FoodForm
+      </nav>
+    </div>
+  );
+};
+export default FoodForm;

@@ -18,7 +18,6 @@ const App = () => {
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
   const handleSignout = () => {
-
     authService.signout();
     setUser(null);
     navigate('/sign-in');
@@ -45,18 +44,18 @@ const App = () => {
     };
     if (user) fetchRestaurants();
   }, [user]);
-
   return (
     <>
       <NavBar user={user} setUser={setUser} handleSignout={handleSignout} />
       <Routes>
         {/* <Route path='/' element={<Landing />} /> */}
-        <Route path='/sign-up' element={<Register />} />
-        <Route path='/sign-in' element={<SignIn setUser={setUser}/>} />
+        <Route path='/signup' element={<Register />} />
+        <Route path='/signin' element={<SignIn setUser={setUser}/>} />
         <Route path='/restaurants' element={<Restaurant />} />
         <Route path='/restaurants/new' element={<RestaurantForm handleAddRestaurant={handleAddRestaurant} />} />
         <Route path='/restaurants/:id' element={<SingleRestaurant handleDeleteRestaurant={handleDeleteRestaurant} />} />
         <Route path='/restaurants/:id/edit' element={<RestaurantForm handleUpdateRestaurant={handleUpdateRestaurant} />} />
+        <Route path="/" element={<Restaurant />} />
       </Routes>
     </>
   );
