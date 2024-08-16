@@ -59,3 +59,19 @@ body {
   button[type="submit"]:hover {
     background-color: #555;
   }
+
+.logo {
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+  }
+.container {
+    display: flex;
+    flex-basis: 100%;
+  }
+.logo {
+    flex-basis: 40px; 
+    margin-left: 10px; 
+  }
